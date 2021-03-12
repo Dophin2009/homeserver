@@ -1,0 +1,13 @@
+Homeserver
+==========
+
+Configurations for my homeserver setup.
+
+Components
+==========
+
+- Wireguard
+- qBittorrent
+- Beets, MPD, & Icecast
+- PiHole
+- Distcc
