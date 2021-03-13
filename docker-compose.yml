@@ -1,0 +1,54 @@
+version: '3.7'
+
+services:
+  minecraft:
+    build: ./images/paperspigot
+    container_name: minecraft
+    stdin_open: true
+    tty: true
+    restart: always
+    networks:
+      - paperspigot
+    ports:
+      - 25565:25565
+    volumes:
+      - paperspigot-config:/op./paperspigot/config
+      - paperspigot-worlds:/op./paperspigot/worlds
+      - paperspigot-plugins:/op./paperspigot/plugins
+      - paperspigot-data:/op./paperspigot/data
+      - paperspigot-logs:/op./paperspigot/logs
+
+volumes:
+  paperspigot-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./paperspigot/config
+  paperspigot-worlds:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./paperspigot/worlds
+  paperspigot-plugins:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./paperspigot/plugins
+  paperspigot-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./paperspigot/data
+  paperspigot-logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./paperspigot/logs
+
+networks:
+  paperspigot: {}
