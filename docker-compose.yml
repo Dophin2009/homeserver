@@ -1,6 +1,21 @@
 version: '3.7'
 
 services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/config:/etc/prometheus
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
   syncthing:
     image: syncthing/syncthing
     container_name: syncthing
@@ -51,3 +66,6 @@ services:
       - type: bind
         source: ./paperspigot/logs
         target: /opt/minecraft/logs
+
+volumes:
+  prometheus-data: {}
