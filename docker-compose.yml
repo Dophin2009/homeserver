@@ -21,16 +21,16 @@ services:
     volumes:
       - type: bind
         source: ./paperspigot/config
-        target: /opt/paperspigot/config
+        target: /opt/minecraft/config
       - type: bind
         source: ./paperspigot/worlds
-        target: /opt/paperspigot/worlds
+        target: /opt/minecraft/worlds
       - type: bind
         source: ./paperspigot/plugins
-        target: /opt/paperspigot/plugins
+        target: /opt/minecraft/plugins
       - type: bind
         source: ./paperspigot/data
-        target: /opt/paperspigot/data
+        target: /opt/minecraft/data
       - type: bind
         source: ./paperspigot/logs
-        target: /opt/paperspigot/logs
+        target: /opt/minecraft/logs
