@@ -1,6 +1,7 @@
 /*.jar
+/Updater
 
 /dynmap/web
 
-/Updater
 /bStats
+/bPermissions
