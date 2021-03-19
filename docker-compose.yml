@@ -1,6 +1,15 @@
 version: '3.7'
 
 services:
+  syncthing:
+    image: syncthing/syncthing
+    container_name: syncthing
+    restart: always
+    network_mode: host
+    volumes:
+      - type: bind
+        source: ./syncthing/sync
+        target: /var/syncthing
   paperspigot:
     build: ./images/paperspigot
     container_name: paperspigot
