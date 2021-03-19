@@ -15,8 +15,8 @@ LABEL maintainer="Felix Klauke <info@felix-klauke.de>"
 #################
 ### Arguments ###
 #################
-ARG PAPER_VERSION=1.16.1
-ARG PAPER_DOWNLOAD_URL=https://papermc.io/api/v1/paper/${PAPER_VERSION}/latest/download
+ARG PAPER_VERSION=1.16.5
+ARG PAPER_DOWNLOAD_URL=https://papermc.io/api/v2/projects/paper/versions/${PAPER_VERSION}/builds/547/downloads/paper-1.16.5-547.jar
 ARG MINECRAFT_BUILD_USER=minecraft-build
 ENV MINECRAFT_BUILD_PATH=/opt/minecraft
 
@@ -63,8 +63,7 @@ ENV WORLDS_PATH=${MINECRAFT_PATH}/worlds
 ENV PLUGINS_PATH=${MINECRAFT_PATH}/plugins
 ENV PROPERTIES_LOCATION=${CONFIG_PATH}/server.properties
 ENV JAVA_HEAP_SIZE=4G
-# ENV JAVA_ARGS="-server -Dcom.mojang.eula.agree=true"
-ENV JAVA_ARGS=""
+ENV JAVA_ARGS="-server -Dcom.mojang.eula.agree=true"
 ENV SPIGOT_ARGS="--nojline"
 ENV PAPER_ARGS=""
 
