@@ -23,8 +23,11 @@ services:
     network_mode: host
     volumes:
       - type: bind
-        source: ./syncthing/sync
-        target: /var/syncthing
+        source: ./syncthing/config
+        target: /var/syncthing/config
+      - type: bind
+        source: ./var/media
+        target: /var/syncthing/sync/media
   deluge:
     image: linuxserver/deluge
     container_name: deluge
