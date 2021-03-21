@@ -45,19 +45,23 @@ services:
         source: ./deluge/downloads
         target: /downloads
   icecast:
-    build: ./images/icecast
+    build:
+      context: ./images/icecast
+      args:
+        PASSWORD: ${MPD_ICECAST_PASSWORD}
     container_name: icecast
     restart: unless-stopped
     networks:
       - music_stack
     ports:
       - 8000:8000
-    environment:
-      - PASSWORD_FILE=/run/secrets/mpd_icecast_password
-    secrets:
-      - mpd_icecast_password
   mpd:
-    build: ./images/mpd
+    build:
+      context: ./images/mpd
+      args:
+        PASSWORD: ${MPD_ICECAST_PASSWORD}
+        LIBRARY: /library
+        PLAYLISTS: /playlists
     container_name: mpd
     restart: unless-stopped
     depends_on:
@@ -66,12 +70,6 @@ services:
       - music_stack
     ports:
       - 6600:6600
-    environment:
-      - LIBRARY=/library
-      - PLAYLISTS=/playlists
-      - PASSWORD_FILE=/run/secrets/mpd_icecast_password
-    secrets:
-      - mpd_icecast_password
     volumes:
       - type: bind
         source: ./var/media/music
@@ -82,6 +80,19 @@ services:
       - type: bind
         source: ./mpd/logs
         target: /var/log
+  # ympd:
+    # build:
+      # context: ./images/ympd
+      # args:
+        # PASSWORD: ${MPD_ICECAST_PASSWORD}
+    # container_name: ympd
+    # restart: unless-stopped
+    # depends_on:
+      # - mpd
+    # networks:
+      # - music_stack
+    # ports:
+      # - 8080:8080
   paperspigot:
     build: ./images/paperspigot
     container_name: paperspigot
@@ -114,7 +125,3 @@ volumes:
 networks:
   music_stack:
     driver: bridge
-
-secrets:
-  mpd_icecast_password:
-    file: secrets/mpd_icecast_password.txt

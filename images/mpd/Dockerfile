@@ -2,19 +2,19 @@ FROM alpine:3.13
 
 ARG LIBRARY
 ARG PLAYLISTS
-ARG PASSWORD_FILE
+ARG PASSWORD
 
 RUN set -xe \
     && apk add --no-cache mpd mpc \
     && setcap -r /usr/bin/mpd
 
-ADD mpd.conf /config/mpd.conf
-
 RUN mkdir -p /var/lib/mpd
 RUN touch /var/lib/mpd/mpd.db
 
-ADD docker-entrypoint.sh docker-entrypoint.sh
-RUN chmod +x docker-entrypoint.sh
+ADD mpd.conf /etc/mpd.conf
+RUN sed -i "s/{{PASSWORD}}/${PASSWORD}/" /etc/mpd.conf
+RUN sed -i "s~{{LIBRARY}}~${LIBRARY}~" /etc/mpd.conf
+RUN sed -i "s~{{PLAYLISTS}}~${PLAYLISTS}~" /etc/mpd.conf
 
 EXPOSE 6600
-CMD ["./docker-entrypoint.sh"]
+CMD ["mpd", "--verbose", "--stdout", "--no-daemon", "/etc/mpd.conf"]
