@@ -104,19 +104,6 @@ services:
       - type: bind
         source: ./mpd/playlists
         target: /playlists
-  # ympd:
-    # build:
-      # context: ./images/ympd
-      # args:
-        # PASSWORD: ${MPD_ICECAST_PASSWORD}
-    # container_name: ympd
-    # restart: unless-stopped
-    # depends_on:
-      # - mpd
-    # networks:
-      # - music_stack
-    # ports:
-      # - 8080:8080
   paperspigot:
     build: ./images/paperspigot
     container_name: paperspigot
