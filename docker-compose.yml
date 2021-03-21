@@ -42,8 +42,20 @@ services:
         source: ./deluge/config
         target: /config
       - type: bind
-        source: ./deluge/downloads
-        target: /downloads
+        source: ./deluge/scripts
+        target: /scripts
+      - type: bind
+        source: ./var/torrent/complete
+        target: /downloads/complete
+      - type: bind
+        source: ./var/torrent/progress
+        target: /downloads/progress
+      - type: bind
+        source: ./var/torrent/files
+        target: /downloads/torrent
+      - type: bind
+        source: ./var/torrent/watch
+        target: /downloads/watch
   icecast:
     build:
       context: ./images/icecast

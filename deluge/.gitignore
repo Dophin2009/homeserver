@@ -1,2 +1,2 @@
-/config
-/downloads
+/config/*
+!/config/core.conf
