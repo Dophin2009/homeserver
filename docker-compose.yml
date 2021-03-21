@@ -44,6 +44,44 @@ services:
       - type: bind
         source: ./deluge/downloads
         target: /downloads
+  icecast:
+    build: ./images/icecast
+    container_name: icecast
+    restart: unless-stopped
+    networks:
+      - music_stack
+    ports:
+      - 8000:8000
+    environment:
+      - PASSWORD_FILE=/run/secrets/mpd_icecast_password
+    secrets:
+      - mpd_icecast_password
+  mpd:
+    build: ./images/mpd
+    container_name: mpd
+    restart: unless-stopped
+    depends_on:
+      - icecast
+    networks:
+      - music_stack
+    ports:
+      - 6600:6600
+    environment:
+      - LIBRARY=/library
+      - PLAYLISTS=/playlists
+      - PASSWORD_FILE=/run/secrets/mpd_icecast_password
+    secrets:
+      - mpd_icecast_password
+    volumes:
+      - type: bind
+        source: ./var/media/music
+        target: /library
+      - type: bind
+        source: ./mpd/playlists
+        target: /playlists
+      - type: bind
+        source: ./mpd/logs
+        target: /var/log
   paperspigot:
     build: ./images/paperspigot
     container_name: paperspigot
@@ -72,3 +110,11 @@ services:
 
 volumes:
   prometheus-data: {}
+
+networks:
+  music_stack:
+    driver: bridge
+
+secrets:
+  mpd_icecast_password:
+    file: secrets/mpd_icecast_password.txt
