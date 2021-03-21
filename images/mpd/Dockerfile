@@ -13,8 +13,6 @@ RUN touch /var/lib/mpd/mpd.db
 
 ADD mpd.conf /etc/mpd.conf
 RUN sed -i "s/{{PASSWORD}}/${PASSWORD}/" /etc/mpd.conf
-RUN sed -i "s~{{LIBRARY}}~${LIBRARY}~" /etc/mpd.conf
-RUN sed -i "s~{{PLAYLISTS}}~${PLAYLISTS}~" /etc/mpd.conf
 
 EXPOSE 6600
 CMD ["mpd", "--verbose", "--stdout", "--no-daemon", "/etc/mpd.conf"]
