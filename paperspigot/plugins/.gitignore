@@ -3,6 +3,9 @@
 
 /dynmap/web
 /dynmap/world.pending
+/dynmap/ids-by-ip.txt
 
 /bStats
 /bPermissions
+
+/eBackup
